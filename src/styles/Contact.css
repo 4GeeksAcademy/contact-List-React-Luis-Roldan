@@ -1,0 +1,23 @@
+.ContactsContainer {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.AddContactButton {
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.ContactCardContainer {
+  border: solid grey;
+  margin-right: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  justify-content: space-between;
+}
