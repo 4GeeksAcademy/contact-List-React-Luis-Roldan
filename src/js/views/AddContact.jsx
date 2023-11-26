@@ -18,7 +18,6 @@ export const AddContact = () => {
 
   useEffect(() => {
     if (contact_id) {
-      // If updating, fetch the existing contact details based on contact_id
       fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`)
         .then(response => response.json())
         .then(data => {
@@ -53,18 +52,15 @@ export const AddContact = () => {
     })
       .then(response => response.json())
       .then(data => {
-        // Update the contact list with the new/updated contact
         if (contact_id) {
           const updatedContacts = contacts.map(contact =>
             contact.id === contact_id ? data : contact
           );
           setContacts(updatedContacts);
         } else {
-          // If adding a new contact, append it to the existing list
           setContacts([...contacts, data]);
         }
 
-        // Reset the form
         setNewContact({
           full_name: '',
           email: '',

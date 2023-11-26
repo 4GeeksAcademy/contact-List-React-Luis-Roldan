@@ -21,3 +21,8 @@ img {
   padding: 10px;
   justify-content: space-between;
 }
+
+.deleteButton {
+  margin-top: 10px;
+  margin-left: 10px;
+}
