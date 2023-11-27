@@ -14,33 +14,37 @@ export const AddContact = () => {
     address: '',
   });
 
+  const initialState = {
+    full_name: '',
+    email: '',
+    agenda_slug: 'luis-roldan',
+    phone: '',
+    address: '',
+  };
+
   const { contact_id } = useParams();
 
   useEffect(() => {
     if (contact_id) {
-      fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`)
-        .then(response => response.json())
-        .then(data => {
-          setNewContact(data);
-        })
-        .catch(error => {
-          console.error('Error fetching contact details:', error);
-        });
+      actions.fetchContactDetails(contact_id);
     }
-  }, [contact_id]);
+  }, [contact_id, actions]);
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewContact((prevContact) => ({
       ...prevContact,
       [name]: value,
+      
     }));
   };
 
   const handleSave = () => {
-    const method = contact_id ? 'PUT' : 'POST';
-    const url = contact_id
-      ? `https://playground.4geeks.com/apis/fake/contact/${contact_id}`
+
+    const method = newContact.id ? 'PUT' : 'POST';
+    const url = newContact.id
+      ? `https://playground.4geeks.com/apis/fake/contact/${newContact.id}`
       : 'https://playground.4geeks.com/apis/fake/contact/';
 
     fetch(url, {
@@ -52,27 +56,78 @@ export const AddContact = () => {
     })
       .then(response => response.json())
       .then(data => {
-        if (contact_id) {
-          const updatedContacts = contacts.map(contact =>
-            contact.id === contact_id ? data : contact
-          );
-          setContacts(updatedContacts);
-        } else {
-          setContacts([...contacts, data]);
-        }
-
-        setNewContact({
-          full_name: '',
-          email: '',
-          agenda_slug: 'luis-roldan',
-          phone: '',
-          address: '',
-        });
+        
+        actions.fetchContactsByAgenda(newContact.agenda_slug);
+        
+        
+        setNewContact(initialState);
       })
       .catch(error => {
         console.error('Error saving contact:', error);
       });
   };
+
+
+
+
+
+  // useEffect(() => {
+  //   if (contact_id) {
+  //     fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         setNewContact(data);
+  //       })
+  //       .catch(error => {
+  //         console.error('Error fetching contact details:', error);
+  //       });
+  //   }
+  // }, [contact_id]);
+
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setNewContact((prevContact) => ({
+  //     ...prevContact,
+  //     [name]: value,
+  //   }));
+  // };
+
+  // const handleSave = () => {
+  //   const method = contact_id ? 'PUT' : 'POST';
+  //   const url = contact_id
+  //     ? `https://playground.4geeks.com/apis/fake/contact/${contact_id}`
+  //     : 'https://playground.4geeks.com/apis/fake/contact/';
+
+  //   fetch(url, {
+  //     method,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(newContact),
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       if (contact_id) {
+  //         const updatedContacts = contacts.map(contact =>
+  //           contact.id === contact_id ? data : contact
+  //         );
+  //         setContacts(updatedContacts);
+  //       } else {
+  //         setContacts([...contacts, data]);
+  //       }
+
+  //       setNewContact({
+  //         full_name: '',
+  //         email: '',
+  //         agenda_slug: 'luis-roldan',
+  //         phone: '',
+  //         address: '',
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error('Error saving contact:', error);
+  //     });
+  // };
 
   return (
     <div className="mt-5">

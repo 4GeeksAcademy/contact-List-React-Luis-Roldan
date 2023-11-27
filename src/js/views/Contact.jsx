@@ -1,47 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../styles/Contact.css";
 import { ContactCard } from "../component/ContactCard.jsx";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+
 
 export const Contact = () => {
-  const [contacts, setContacts] = useState([]);
+  const { store, actions } = useContext(Context);
+  // const [contacts, setContacts] = useState([]);
 
-  useEffect(() => {
-    fetch("https://playground.4geeks.com/apis/fake/contact/agenda/luis-roldan")
-      .then((response) => response.json())
-      .then((data) => setContacts(data))
-      .catch((error) => console.error("Error fetching contacts:", error));
-  }, []); 
 
   const handleDeleteContact = (contactId) => {
-    fetch(`https://playground.4geeks.com/apis/fake/contact/${contactId}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== contactId));
-        } else {
-          console.error("Error deleting contact:", response.status);
-        }
-      })
-      .catch((error) => console.error("Error deleting contact:", error));
+    actions.deleteContact(contactId);
   };
 
   const handleDeleteAllContacts = () => {
-    
-    fetch(`https://playground.4geeks.com/apis/fake/contact/agenda/luis-roldan`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-         
-          setContacts([]);
-        } else {
-          console.error("Error deleting all contacts:", response.status);
-        }
-      })
-      .catch((error) => console.error("Error deleting all contacts:", error));
+    actions.deleteAllContacts();
   };
+
+  useEffect(() => {
+    actions.fetchContactsByAgenda('luis-roldan');
+  }, []);
+
+
+
+  // useEffect(() => { 
+  //   fetch("https://playground.4geeks.com/apis/fake/contact/agenda/luis-roldan")
+  //     .then((response) => response.json())
+  //     .then((data) => setContacts(data))
+  //     .catch((error) => console.error("Error fetching contacts:", error));
+  // }, []); 
+
+  // const handleDeleteContact = (contactId) => {
+  //   fetch(`https://playground.4geeks.com/apis/fake/contact/${contactId}`, {
+  //     method: 'DELETE',
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== contactId));
+  //       } else {
+  //         console.error("Error deleting contact:", response.status);
+  //       }
+  //     })
+  //     .catch((error) => console.error("Error deleting contact:", error));
+  // };
+
+  // const handleDeleteAllContacts = () => {
+    
+  //   fetch(`https://playground.4geeks.com/apis/fake/contact/agenda/luis-roldan`, {
+  //     method: 'DELETE',
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+         
+  //         setContacts([]);
+  //       } else {
+  //         console.error("Error deleting all contacts:", response.status);
+  //       }
+  //     })
+  //     .catch((error) => console.error("Error deleting all contacts:", error));
+  // };
 
   return (
     <div className=" mt-5">
@@ -53,7 +71,7 @@ export const Contact = () => {
         </Link>
       </div>
       <div className="ContactsList">
-      {contacts.map((contact) => (
+      {store.contacts.map((contact) => (
           <ContactCard key={contact.id} contact={contact} onDelete={handleDeleteContact} />
         ))}
       </div>
