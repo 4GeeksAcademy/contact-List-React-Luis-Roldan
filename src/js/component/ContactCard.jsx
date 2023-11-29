@@ -1,5 +1,6 @@
 import React from "react";
 import profilePicture from "../../img/cool-profile-picture.jpg";
+import { Link } from "react-router-dom";
 
 export const ContactCard = ({ contact, onDelete }) => {
 
@@ -7,6 +8,7 @@ export const ContactCard = ({ contact, onDelete }) => {
     onDelete(contact.id);
   };
 
+  const editUrl = `/edit/${contact.id}`;
 
   return (
     <div>
@@ -21,16 +23,20 @@ export const ContactCard = ({ contact, onDelete }) => {
         <div>
           <h4>{contact.full_name}</h4>
           <span className="d-flex flex-column gap-2">
-            <i class="fa-solid fa-location-dot"> {contact.address}</i>
-            <i class="fa-solid fa-phone"> {contact.phone}</i>
-            <i class="fa-solid fa-envelope"> {contact.email}</i>
+            <i className="fa-solid fa-location-dot"> {contact.address}</i>
+            <i className="fa-solid fa-phone"> {contact.phone}</i>
+            <i className="fa-solid fa-envelope"> {contact.email}</i>
           </span>
         </div>
+        {editUrl && (
+        <Link to={`/edit/${contact.id}`}>
+          <div className="d-flex">
+          <i className="fa-solid fa-pen-to-square" id="edit"></i>
+          </div>
+        </Link>
+           )}
         <div className="d-flex">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </div>
-        <div className="d-flex">
-          <i class="fa-solid fa-trash" onClick={handleDelete}></i>
+          <i className="fa-solid fa-trash" onClick={handleDelete}></i>
         </div>
       </div>
     </div>

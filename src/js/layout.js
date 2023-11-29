@@ -9,6 +9,7 @@ import { Contact } from "./views/Contact.jsx";
 import { AddContact } from "./views/AddContact.jsx";
 import injectContext from "./store/appContext";
 import { Context } from "./store/appContext";
+import { ContactEdit } from "./views/ContactEdit.jsx";
 
 // import { ContactCard } from "./component/ContactCard.jsx";
 import { Navbar } from "./component/navbar";
@@ -33,6 +34,7 @@ const Layout = () => {
           <Routes>
             <Route path="/" element={<Contact />} />
             <Route path="/form" element={<AddContact />} />
+            <Route path="/edit/:contactId" component={ContactEdit} />
             <Route path="*" element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

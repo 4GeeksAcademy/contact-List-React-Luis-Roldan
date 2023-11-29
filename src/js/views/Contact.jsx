@@ -18,10 +18,12 @@ export const Contact = () => {
     actions.deleteAllContacts();
   };
 
-  useEffect(() => {
-    actions.fetchContactsByAgenda('luis-roldan');
-  }, []);
+    useEffect(() => {
+      actions.fetchContactsByAgenda('luis-roldan');
+    }, []);
 
+
+ 
 
 
   // useEffect(() => { 
