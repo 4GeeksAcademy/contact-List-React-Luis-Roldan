@@ -1,46 +1,46 @@
-import React, { useEffect, useContext  } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
+  import React, { useEffect, useContext  } from "react";
+  import { BrowserRouter, Route, Routes } from "react-router-dom";
+  import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./views/home";
-import { Demo } from "./views/demo";
-import { Single } from "./views/single";
-import { Contact } from "./views/Contact.jsx";
-import { AddContact } from "./views/AddContact.jsx";
-import injectContext from "./store/appContext";
-import { Context } from "./store/appContext";
-import { ContactEdit } from "./views/ContactEdit.jsx";
+  import { Home } from "./views/home";
+  import { Demo } from "./views/demo";
+  import { Single } from "./views/single";
+  import { Contact } from "./views/Contact.jsx";
+  import { AddContact } from "./views/AddContact.jsx";
+  import injectContext from "./store/appContext";
+  import { Context } from "./store/appContext";
+  import { ContactEdit } from "./views/ContactEdit.jsx";
 
-// import { ContactCard } from "./component/ContactCard.jsx";
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+  // import { ContactCard } from "./component/ContactCard.jsx";
+  import { Navbar } from "./component/navbar";
+  import { Footer } from "./component/footer";
 
-//create your first component
-const Layout = () => {
+  //create your first component
+  const Layout = () => {
 
-  const {actions } = useContext(Context);
-  //the basename is used when your project is published in a subdirectory and not in the root of the domain
-  // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-  const basename = process.env.BASENAME || "";
+    const {actions } = useContext(Context);
+    //the basename is used when your project is published in a subdirectory and not in the root of the domain
+    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+    const basename = process.env.BASENAME || "";
 
-  useEffect(() => {
-    actions.fetchContacts(); 
-  }, []);
+    useEffect(() => {
+      actions.fetchContacts(); 
+    }, []);
 
-  return (
-    <div>
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Routes>
-            <Route path="/" element={<Contact />} />
-            <Route path="/form" element={<AddContact />} />
-            <Route path="/edit/:contactId" component={ContactEdit} />
-            <Route path="*" element={<h1>Not found!</h1>} />
-          </Routes>
-        </ScrollToTop>
-      </BrowserRouter>
-    </div>
-  );
-};
+    return (
+      <div>
+        <BrowserRouter basename={basename}>
+          <ScrollToTop>
+            <Routes>
+              <Route path="/" element={<Contact />} />
+              <Route path="/form" element={<AddContact />} />
+              <Route path="/edit/:contactId" element={<ContactEdit />} />
+              <Route path="*" element={<h1>Not found!</h1>} />
+            </Routes>
+          </ScrollToTop>
+        </BrowserRouter>
+      </div>
+    );
+  };
 
-export default injectContext(Layout);
+  export default injectContext(Layout);
